@@ -1,3 +1,7 @@
+/*
+This code doesn't validate the input. It assumes that valid data are inputed. Although code can be modified easily to do validation.
+*/
+
 #include <stdio.h>
 #include <math.h>
 
