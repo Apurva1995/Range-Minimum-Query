@@ -70,13 +70,46 @@ int findFirstLevelTree(int cols, int max_size, int finalTree[][max_size], int y1
     }
 }
 
-int updatedTrees() {
+void finalUpdate(int max_size, int finalTree[][max_size], int y1, int diff, int strip, int si, int ss, int se) {
     
+    if(y1 < ss || y1 >se)
+        return;
+    
+    else {
+        
+        finalTree[strip][si] += diff;
+        if(ss != se) {
+            int mid = (ss + se)/2;
+            finalUpdate(max_size, finalTree, y1, diff, strip, 2*si + 1, ss, mid);
+            finalUpdate(max_size, finalTree, y1, diff, strip, 2*si + 2, mid + 1, se);
+        }
+    }
+}
+
+
+void updatedTrees(int cols, int max_size, int finalTree[][max_size], int x1, int y1, int diff, int si, int ss, int se) {
+    
+    if(ss == se && ss == x1) {
+        
+        finalUpdate(max_size, finalTree, y1, diff, si, 0, 0, cols - 1);
+    }
+    else if(x1 < ss || x1 > se)
+        return;
+    
+    else {
+        
+        int mid = (ss + se)/2;
+        updatedTrees(cols, max_size, finalTree, x1, y1, diff, si * 2 + 1, ss, mid);
+        updatedTrees(cols, max_size, finalTree, x1, y1, diff, si * 2 + 2, mid + 1, se);
+        
+        for(int i=0;i<max_size;i++)
+            finalTree[si][i] = finalTree[2*si+1][i] + finalTree[2*si+2][i];
+    }
 }
 
 int main() {
 	
-	int rows, cols, queryNumber, queryType, x1, x2, y1, y2;
+	int rows, cols, queryNumber, queryType, x1, x2, y1, y2, val, diff;
 	
 	printf("Enter number of rows and columns\n");
 	scanf("%d", &rows);
@@ -110,23 +143,31 @@ int main() {
 	printf("Enter the queries\n");
 	for(int i=0;i<queryNumber;i++) {
 	    
-	    printf("Enter query type and query coordinates in x1, x2, y1, y2 order\n");
+	    printf("Enter query type\n");
 	    scanf("%d", &queryType);
-	    scanf("%d", &x1);
-	    scanf("%d", &x2);
-	    scanf("%d", &y1);
-	    scanf("%d", &y2);
 	    
-	    if(queryType == 0)
+	    
+	    if(queryType == 0) {
+	        
+	        printf("Enter coordinates in x1, x2, y1, y2 order\n");
+	        scanf("%d", &x1);
+	        scanf("%d", &x2);
+	        scanf("%d", &y1);
+	        scanf("%d", &y2);
 	        printf("The sum of the sub matrix is : %d \n", findFirstLevelTree(cols, max_size, finalTree, y1, y2, x1, x2, 0, 0, rows - 1));
+	    }
 	    else if(queryType == 1) {
 	        
-	        if(updatedTrees()) {
-	            
-	            printf("value is updated\n");    
-	        }
-	        else
-	            printf("Something went wrong. Couldn't updated the value\n");
+	        printf("Enter the coordinates at which you want to update\n");
+	        scanf("%d", &x1);
+	        scanf("%d", &y1);
+	        printf("Enter the value to update\n");
+	        scanf("%d", &val);
+	        
+	        diff = val - mat[x1][y1];
+	        mat[x1][y1] = val;
+	        
+	        updatedTrees(cols, max_size, finalTree, x1, y1, diff, 0, 0, rows - 1);
 	    }
 	    else
 	        printf("Wrong query type. Query type can be either 0 or 1\n");
