@@ -27,7 +27,7 @@ int findSum(int decomposedArray[], int arr[], int n, int l, int r, int blckSize)
         l++;
     }
     
-    while(l + blckSize <= r) {
+    while(l + blckSize-1 <= r) {
         
         sum += decomposedArray[l/blckSize];
         l += blckSize;
