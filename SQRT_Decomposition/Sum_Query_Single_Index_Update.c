@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#define MAX_SIZE 100
 
 void decomposeArray(int decomposedArray[], int arr[], int n, int blckSize) {
     
@@ -52,7 +53,8 @@ int main(void) {
 	blckSize = sqrt(n);
 	
 	int arr[n];
-	int decomposedArray[blckSize + 1];
+	//Assigning the size manually. We can provide needed size by slight code change.
+	int decomposedArray[MAX_SIZE];
 	
 	printf("Enter elements in array\n");
 	for(int i=0;i<n;i++) {
