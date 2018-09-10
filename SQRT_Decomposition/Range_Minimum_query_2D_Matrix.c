@@ -3,10 +3,11 @@
 #include <stdio.h>
 #include <math.h>
 #include <limits.h>
+
 #define MAX_SIZE 100
 
 
-int createFirstLevelMat(int firstSize, int MAX_SIZE, int rows, int cols, int firstLevelMat[][MAX_SIZE], int matrix[][cols]) {
+int createFirstLevelMat(int firstSize, int mSize, int rows, int cols, int firstLevelMat[][mSize], int matrix[][cols]) {
     
     int count;
     
@@ -31,7 +32,7 @@ int createFirstLevelMat(int firstSize, int MAX_SIZE, int rows, int cols, int fir
     return count;
 }
 
-int createFinalLevelMat(int secondSize, int MAX_SIZE, int MAX_SIZE, int rows, int finalFirstLevelSize, int finalSecondLevelSize, int firstLevelMat[][MAX_SIZE], int finalLevelMat[][MAX_SIZE]) {
+int createFinalLevelMat(int secondSize, int mSize, int rows, int finalFirstLevelSize, int finalSecondLevelSize, int firstLevelMat[][mSize], int finalLevelMat[][mSize]) {
     
     int count;
     
@@ -55,7 +56,7 @@ int createFinalLevelMat(int secondSize, int MAX_SIZE, int MAX_SIZE, int rows, in
     return count;
 }
 
-int getMin(int x1, int x2, int y1, int y2, int firstSize, int secondSize, int MAX_SIZE, int cols, int matrix[][cols], int firstLevelMat[][MAX_SIZE], int finalLevelMat[][MAX_SIZE]) {
+int getMin(int x1, int x2, int y1, int y2, int firstSize, int secondSize, int mSize, int cols, int matrix[][cols], int firstLevelMat[][mSize], int finalLevelMat[][mSize]) {
     
     int min = INT_MAX;
     int tempY1 = y1;
@@ -175,7 +176,7 @@ int getMin(int x1, int x2, int y1, int y2, int firstSize, int secondSize, int MA
 }
 
 
-void update(int x, int y, int val, int cols, int firstSize, int secondSize, int MAX_SIZE, int matrix[][cols], int firstLevelMat[][MAX_SIZE], int finalLevelMat[][MAX_SIZE]) {
+void update(int x, int y, int val, int cols, int firstSize, int secondSize, int mSize, int matrix[][cols], int firstLevelMat[][mSize], int finalLevelMat[][mSize]) {
     
     matrix[x][y] = val;
     
@@ -235,16 +236,16 @@ int main(void) {
 	
 	int finalLevelMat[MAX_SIZE][MAX_SIZE];
 	
-	finalSecondLevelSize = createFinalLevelMat(secondSize, MAX_SIZE, MAX_SIZE, rows, finalFirstLevelSize, finalSecondLevelSize, firstLevelMat, finalLevelMat);
+	finalSecondLevelSize = createFinalLevelMat(secondSize, MAX_SIZE, rows, finalFirstLevelSize, finalSecondLevelSize, firstLevelMat, finalLevelMat);
 	
 	//Finding minimum in the range x1=0, x2=0, y1=0, y2=1
-	printf("Minimum value present in the given range is : %d\n", getMin(1, 2, 1, 4, firstSize, secondSize, MAX_SIZE, cols, matrix, firstLevelMat, finalLevelMat));
+	printf("Minimum value present in the given range is : %d\n", getMin(1, 2, 1, 3, firstSize, secondSize, MAX_SIZE, cols, matrix, firstLevelMat, finalLevelMat));
     
     //Updating value at x=2 and y = 2
     update(2, 2, 2, cols, firstSize, secondSize, MAX_SIZE, matrix, firstLevelMat, finalLevelMat);
     
     //Finding minimum in the range x1=0, x2=0, y1=0, y2=1
-	printf("Minimum value present in the given range is : %d ", getMin(1, 2, 1, 4, firstSize, secondSize, MAX_SIZE, cols, matrix, firstLevelMat, finalLevelMat));
+	printf("Minimum value present in the given range is : %d ", getMin(1, 2, 1, 3, firstSize, secondSize, MAX_SIZE, cols, matrix, firstLevelMat, finalLevelMat));
     
 	return 0;
 }
